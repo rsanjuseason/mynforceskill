@@ -72,7 +72,7 @@ alexaApp.intent('sayNumber',
         		}
     		}
     	);
-    }
+    });
   }
 );
 
