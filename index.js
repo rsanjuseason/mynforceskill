@@ -65,15 +65,13 @@ app.intent('saynumber',
 		}
 
 
-		getData(function(data) { 
+		var promise = getData(function(data) { 
 			console.log(data);
-			mydata = data;
-			//response.say(data); 
-
-		}).then(data => {
+		});
+		promise.then(function(data) {
 			console.log('--->' + data);
 			console.log('--->' + mydata);
-			response.say("connected " + mydata);
+			response.say("connected " + data);
     
   		})
 		
