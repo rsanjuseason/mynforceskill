@@ -7,6 +7,7 @@ var express_app = express();
 var pg = require('pg');
 var app = new alexa.app( 'skill' );
 
+pg.defaults.ssl = true;
 
 
 app.launch( function( request, response ) {
@@ -33,10 +34,11 @@ app.intent('saynumber',
     //var number = request.slot('number');
     //response.say("You asked for the number "+number);
     pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
+    	console.log(process.env.DATABASE_URL);
     	// watch for any connect issues
         if (err) console.log(err);
         conn.query(
-        	'SELECT firtname,lastname,email FROM salesforce.Lead',
+        	'SELECT firstname,lastname,email FROM salesforce.Lead',
         	[],
         	function(err, result) {
         		done();
