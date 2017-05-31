@@ -36,6 +36,7 @@ app.intent('saynumber',
 		var number = request.slot('number');
 		
 		getRecord(function(record){
+			console.log(record);
 			response.say(record);
 		});	
 	    
