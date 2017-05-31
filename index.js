@@ -40,15 +40,17 @@ app.intent('saynumber',
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
 
-        /*conn.query(
+        conn.query(
         	'SELECT firstname,lastname,email FROM salesforce.Lead',
-        	[],
+        	
         	function(err, result) {
         		done();
         		if (!err) {
         			if(result.rowCount > 0) {
-        				var opp = result.records[0];
-        				response.say('Lead name is ' + opp.firstname);
+        				//var opp = result.records[0];
+        				console.log('this my leads: ' +  result);
+
+        				response.say('found leads' );
         			} else{
         				response.say('No lead found');
         			}
@@ -57,12 +59,13 @@ app.intent('saynumber',
         			response.say('Sorry an error occured ');
         		}
     		}
-    	);*/
-    	conn.query('SELECT firstname,lastname,email FROM salesforce.Lead')
+    	);
+    	/*conn.query('SELECT firstname,lastname,email FROM salesforce.Lead')
 	    .on('row', function(row) {
+	      console.log(row[0)
 	      console.log(JSON.stringify(row));
 	      response.say(JSON.stringify(row));
-	    });
+	    });*/
     });
   }
 );
