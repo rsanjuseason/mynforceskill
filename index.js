@@ -1,8 +1,12 @@
 module.change_code = 1;
 'use strict';
 
+var express = require("express");
 var alexa = require( 'alexa-app' );
+var express_app = express();
+var pg = require('pg');
 var app = new alexa.app( 'skill' );
+
 
 
 app.launch( function( request, response ) {
@@ -52,5 +56,7 @@ app.intent('saynumber',
     });
   }
 );
+
+app.express({ expressApp: express_app });
 
 module.exports = app;
