@@ -44,7 +44,7 @@ app.intent('saynumber',
         	'SELECT firstname,lastname,email FROM salesforce.Lead',
         	
         	function(err, result) {
-        		done();
+        		//done();
         		if (!err) {
         			if(result.rowCount > 0) {
         				//var opp = result.records[0];
@@ -61,13 +61,9 @@ app.intent('saynumber',
         		conn.end();
     		}
     	);
-    	/*conn.query('SELECT firstname,lastname,email FROM salesforce.Lead')
-	    .on('row', function(row) {
-	      console.log(row[0)
-	      console.log(JSON.stringify(row));
-	      response.say(JSON.stringify(row));
-	    });*/
+    	
     });
+    response.say("You asked for the number "+number);
   }
 );
 
