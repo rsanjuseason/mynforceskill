@@ -27,7 +27,7 @@ var pgconnect = pg.connect(process.env.DATABASE_URL, function (err, client,done)
 				               return err;
 				            }
 				         	
-				           back(result.rows[0].firstname);
+				           //back(result.rows[0].firstname);
 				           done(); 
 				           // client.end();
 						}
