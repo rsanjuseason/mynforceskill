@@ -65,9 +65,11 @@ app.intent('saynumber',
 		}
 
 
-		getData(function(data) { response.say(data); });
+		getData(function(data,response) { 
+			console.log(data);
+			response.say(data); 
 
-	
+		});
 
 		//response.say("connected");
 		
