@@ -50,25 +50,26 @@ app.intent('saynumber',
 		    		if (!err) {
 		    			if(result.rowCount > 0) {
 		    				//var opp = result.records[0];
-		    				rowresult = "found Leads with " + result.rows[0].firstname
+		    				//rowresult = "found Leads with " + result.rows[0].firstname
 		    				console.log("this my leads:"  +  result.rows[0].firstname);
 	    					//return leadname;
-		    				//response.say("found Leads with " + result.rows[0].firstname);
+		    				response.say("Found Leads with name " + result.rows[0].firstname);
 		    			} else{
-		    				rowresult = "No lead found";
+		    				//rowresult = "No lead found";
+		    				response.say("No lead found.");
 		    			}
 		    			
 		    		}else {
-		    			rowresult = "Sorry an error occured";
+		    			//rowresult = "Sorry an error occured";
+		    			response.say("Sorry an error occured.");
 		    		}
 		    		client.end();
 				}
 			);
-			leadname = rowresult;
-			console.log("rowresult " + rowresult);
+			
 		});
-	    console.log("pgcon " + leadname);
-		response.say(" " + leadname);
+	    
+		
 
 	}
 );
