@@ -46,7 +46,7 @@ app.intent('saynumber',
 	    	}
 		    console.log('Connected to postgres! Getting schemas...');
 
-		    client.query(
+		    var Q  = client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
 		    		done();
@@ -55,12 +55,16 @@ app.intent('saynumber',
 		               return err;
 		            }
 		            //console.log(result.rows[0].firstname);
-		            console.log(response);
-		            //return result.rows[0].firstname;
-		             response.say(" " + result.rows[0].firstname);
+		            //console.log(response);
+		            return result.rows[0].firstname;
+		 
 		            client.end();
 				}
-			);	
+			);
+
+
+		    response.say(Q); 	
+
 		});
 
 		//response.say("connected");
