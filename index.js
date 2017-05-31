@@ -67,7 +67,11 @@ app.intent('saynumber',
 		    		response.say("Sorry an error occured.before");
 				}
 			);
-			response.say("Sorry an error occured. after");
+			client.on('end', function(){
+				console.log("Client was disconnected.")
+				response.say("Sorry an error occured. after");
+			});
+			
 		});
 	    
 		
