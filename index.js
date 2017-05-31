@@ -55,7 +55,7 @@ app.intent('saynumber',
 			               return err;
 			            }
 			         	
-			           back(result.rows[0].firstname);
+			           back(result.rows[0].firstname,response);
 			           done(); 
 			           // client.end();
 					}
@@ -65,16 +65,11 @@ app.intent('saynumber',
 		}
 
 
-		var tr = getData(function(mydata) { 
-			console.log(mydata);
-			//mydata = data;
-			return mydata;
-
+		getData(function(data,response) { 
+			response.say(data);		
+			console.log(data); 
 		});
 		
-		tr.then(function(data){
-			response.say(data);
-		});
 	}
 );
 
