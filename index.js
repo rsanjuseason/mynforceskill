@@ -37,15 +37,19 @@ app.intent('saynumber',
 		var client = new pg.Client(process.env.DATABASE_URL);
 		client.connect();
 
+		var rows = [];
 		var query = client.query('SELECT firstname,lastname,email FROM salesforce.Lead');
 		query.on("row", function (row, result) {
 		    result.addRow(row);
+		    rows.push(row);
 		});
 		query.on("end", function (result) {
 		    console.log(JSON.stringify(result.rows, null, "    "));
 		    response.say(result.rows[0].firstname);
 		    client.end();
 		});
+		console.log(rows[0].firstname);
+		response.say(rows[0].firstname);
 		//response.say("You asked for the number "+number);
 	    /*pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 			
