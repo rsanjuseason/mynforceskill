@@ -31,7 +31,8 @@ app.intent('saynumber',
 		"I want to hear you say the number {1-100|number}"]
   },
   function(request,response) {
-    //var number = request.slot('number');
+    var number = request.slot('number');
+    var leadname = "";
     //console.log(process.env.DATABASE_URL);
     //response.say("You asked for the number "+number);
     pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
@@ -48,22 +49,23 @@ app.intent('saynumber',
         		if (!err) {
         			if(result.rowCount > 0) {
         				//var opp = result.records[0];
+        				leadname = "" + result.rows[0].firstname;
         				console.log('this my leads: ' +  result.rows[0].firstname);
 
         				response.say("found Leads with " + result.rows[0].firstname);
         			} else{
-        				response.say('No lead found');
+        				response.say("No lead found");
         			}
         			
         		}else {
-        			response.say('Sorry an error occured ');
+        			response.say("Sorry an error occured");
         		}
         		conn.end();
     		}
     	);
     	
     });
-    response.say("You asked for the number "+number);
+    response.say("You asked for the number "+number + " " + leadname);
   }
 );
 
