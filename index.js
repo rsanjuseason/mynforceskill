@@ -3,7 +3,6 @@ module.change_code = 1;
 
 //var express = require("express");
 var alexa = require( 'alexa-app' );
- var Q ;
 //var express_app = express();
 var pg = require('pg');
 var app = new alexa.app( 'skill' );
@@ -47,7 +46,7 @@ app.intent('saynumber',
 	    	}
 		    console.log('Connected to postgres! Getting schemas...');
 
-		    Q  = client.query(
+		    var Q  = client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
 		    		done();
@@ -55,17 +54,12 @@ app.intent('saynumber',
 		               console.log(err);
 		               return err;
 		            }
-		            //console.log(result.rows[0].firstname);
-		            //console.log(response);
-		            return result.rows[0].firstname;
-		 
+		         
+		            response.say(result.rows[0].firstname);
+		            
 		            client.end();
 				}
-			);
-
-		    console.log(Q);
-		    response.say("" +Q); 	
-
+			);	
 		});
 
 		//response.say("connected");
