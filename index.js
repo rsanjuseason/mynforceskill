@@ -34,43 +34,40 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 
-		pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-			 client.on('drain', client.end.bind(client));
-			var rowresult = "Some error Occured";
+		
+		function getData(back){
 
-			 test();	
+			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+				var rowresult = "Some error Occured";
+			
+			    if (err) {
+			    	
+			    	console.log("not able to get connection "+ err);
+		   			return err;
+		    	}
+			    console.log('Connected to postgres! Getting schemas...');
 
-			//var myresult = "";
-			// watch for any connect issues
-		    if (err) {
-		    	
-		    	console.log("not able to get connection "+ err);
-	   			return err;
-	    	}
-		    console.log('Connected to postgres! Getting schemas...');
+			    client.query(
+			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
+			    	function(err, result) {
+			    		if(err){
+			               console.log(err);
+			               return err;
+			            }
+			         	
+			           back(result.rows[0].firstname);
+			           done(); 
+			           // client.end();
+					}
+				);	
+			});
 
-		    client.query(
-		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-		    	function(err, result) {
-		    		done();
-		    		if(err){
-		               console.log(err);
-		               return err;
-		            }
-		         	
-		         	 test();
-
-		            response.say(result.rows[0].firstname);
-		            
-		           // client.end();
-				}
-			);	
-		});
+		}
 
 
-		function test(){
-			response.say("Nishit");
-		} 	
+		getData(function(data) { response.say(data); });
+
+	
 
 		//response.say("connected");
 		
