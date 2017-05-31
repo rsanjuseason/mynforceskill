@@ -48,7 +48,7 @@ app.intent('saynumber',
         		if (!err) {
         			if(result.rowCount > 0) {
         				//var opp = result.records[0];
-        				console.log('this my leads: ' +  result);
+        				console.log('this my leads: ' +  result.records[0]);
 
         				response.say('found leads' );
         			} else{
