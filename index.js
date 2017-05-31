@@ -55,7 +55,7 @@ app.intent('saynumber',
 			               return err;
 			            }
 			         	
-			           back(result.rows[0].firstname);
+			           back(result.rows[0].firstname).then();
 			           done(); 
 			           // client.end();
 					}
@@ -68,11 +68,15 @@ app.intent('saynumber',
 		getData(function(data) { 
 			console.log(data);
 			mydata = data;
-			response.say(data); 
+			//response.say(data); 
 
-		});
-		console.log('--->' + mydata);
-		response.say("connected " + mydata);
+		}).then(data => {
+			console.log('--->' + data);
+			console.log('--->' + mydata);
+			response.say("connected " + mydata);
+    
+  		})
+		
 		
 	    
 	}
