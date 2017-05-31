@@ -32,7 +32,7 @@ app.intent('saynumber',
 	},
 	function(request,response) {
 
-		pg.defaults.ssl = true;
+		
 		var number = request.slot('number');
 		
 		getRecord(function(record){
@@ -43,20 +43,9 @@ app.intent('saynumber',
 	}
 );
 
-var record = function(request,response) { 
-	var query = client.query("SELECT firstname,lastname,email FROM salesforce.Lead");
-	query.on("row", function (row, result) {
-		result.addRow(row);
-	});
-	query.on("end", function (result) {
-		console.log(result.rows[0].firstname);
-		response.say(result.rows[0].firstname);
-	});
-   //return "Sorry an error occured"; 
-} 
-
 function getRecord(cb) {
-    var result = "Sorry an error occured.";
+	pg.defaults.ssl = true;
+    var resultre = "Sorry an error occured.";
     client.query(
     	'SELECT firstname,lastname,email FROM salesforce.Lead',
     	function(err, result) {
@@ -67,18 +56,18 @@ function getRecord(cb) {
     				//rowresult = "found Leads with " + result.rows[0].firstname
     				console.log("this my leads:"  +  result.rows[0].firstname);
 					//return leadname;
-    				result = "Found Leads with name " + result.rows[0].firstname;
+    				resultre = "Found Leads with name " + result.rows[0].firstname;
     			} else{
     				//rowresult = "No lead found";
-    				result = "No lead found.";
+    				resultre = "No lead found.";
     			}
     			
     		}else {
     			//rowresult = "Sorry an error occured";
-    			result = "Sorry an error occured.";
+    			resultre = "Sorry an error occured.";
     		}
     		
-    		cb(result);
+    		cb(resultre);
     		client.end();
 		}
 	);
