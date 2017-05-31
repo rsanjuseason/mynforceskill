@@ -34,11 +34,12 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 
-		response.say("Nishit");
-		
 		pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-		
+			 client.on('drain', client.end.bind(client));
 			var rowresult = "Some error Occured";
+
+			 test();	
+
 			//var myresult = "";
 			// watch for any connect issues
 		    if (err) {
@@ -48,7 +49,7 @@ app.intent('saynumber',
 	    	}
 		    console.log('Connected to postgres! Getting schemas...');
 
-		    var Q  = client.query(
+		    client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
 		    		done();
@@ -56,13 +57,20 @@ app.intent('saynumber',
 		               console.log(err);
 		               return err;
 		            }
-		         
+		         	
+		         	 test();
+
 		            response.say(result.rows[0].firstname);
 		            
-		            client.end();
+		           // client.end();
 				}
 			);	
 		});
+
+
+		function test(){
+			response.say("Nishit");
+		} 	
 
 		//response.say("connected");
 		
