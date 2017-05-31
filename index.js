@@ -55,7 +55,7 @@ app.intent('saynumber',
 			               return err;
 			            }
 			         	
-			           back(result.rows[0].firstname).then();
+			           back(result.rows[0].firstname);
 			           done(); 
 			           // client.end();
 					}
