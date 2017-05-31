@@ -37,11 +37,12 @@ app.intent('saynumber',
 		//response.say("You asked for the number "+number);
 	    var pgcon =	pg.connect(process.env.DATABASE_URL, function (err, client) {
 			
+			var rowresult = "Some error Occured";
 			// watch for any connect issues
 		    if (err) throw err;
 		    console.log('Connected to postgres! Getting schemas...');
 
-		    client.query(
+		    return rowresult = client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
 		    		client.end();
