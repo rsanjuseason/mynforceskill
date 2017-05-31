@@ -44,7 +44,7 @@ app.intent('saynumber',
 		    client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
-		    		client.End();
+		    		client.end();
 		    		if (!err) {
 		    			if(result.rowCount > 0) {
 		    				//var opp = result.records[0];
