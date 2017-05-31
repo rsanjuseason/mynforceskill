@@ -54,7 +54,7 @@ app.intent('saynumber',
 		               console.log(err);
 		               return err;
 		            }
-		            console.log(result.rows[0].firstname);
+		            //console.log(result.rows[0].firstname);
 		            console.log(response);
 		            //return result.rows[0].firstname;
 		             response.say(" " + result.rows[0].firstname);
