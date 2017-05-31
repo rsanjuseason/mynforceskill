@@ -64,9 +64,10 @@ app.intent('saynumber',
 		    			response.say("Sorry an error occured.");
 		    		}
 		    		client.end();
+		    		response.say("Sorry an error occured.before");
 				}
 			);
-			
+			response.say("Sorry an error occured. after");
 		});
 	    
 		
