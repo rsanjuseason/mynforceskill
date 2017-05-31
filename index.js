@@ -35,39 +35,40 @@ app.intent('saynumber',
 		var leadname = "";
 		
 		//response.say("You asked for the number "+number);
-	    var pgcon =	pg.connect(process.env.DATABASE_URL, function (err, client) {
+	    pg.connect(process.env.DATABASE_URL, function (err, client) {
 			
 			var rowresult = "Some error Occured";
+			//var myresult = "";
 			// watch for any connect issues
 		    if (err) throw err;
 		    console.log('Connected to postgres! Getting schemas...');
 
-		    var rowresult = client.query(
+		    client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
 		    		
 		    		if (!err) {
 		    			if(result.rowCount > 0) {
 		    				//var opp = result.records[0];
-		    				leadname = "found Leads with " + result.rows[0].firstname
+		    				rowresult = "found Leads with " + result.rows[0].firstname
 		    				console.log("this my leads:"  +  result.rows[0].firstname);
 	    					//return leadname;
 		    				//response.say("found Leads with " + result.rows[0].firstname);
 		    			} else{
-		    				leadname = "No lead found";
+		    				rowresult = "No lead found";
 		    			}
 		    			
 		    		}else {
-		    			leadname = "Sorry an error occured";
+		    			rowresult = "Sorry an error occured";
 		    		}
 		    		client.end();
 				}
 			);
-			
-			console.log("rowresult " + JSON.stringify(rowresult));
+			leadname = rowresult;
+			console.log("rowresult " + rowresult);
 		});
 	    console.log("pgcon " + leadname);
-		response.say(" " + pgcon);
+		response.say(" " + leadname);
 
 	}
 );
