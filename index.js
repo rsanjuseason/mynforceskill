@@ -34,7 +34,7 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 		
-		pg.connect(process.env.DATABASE_URL, function (err, client,done,response) {
+		pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 		
 			var rowresult = "Some error Occured";
 			//var myresult = "";
@@ -48,7 +48,7 @@ app.intent('saynumber',
 
 		    client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-		    	function(err, result,response) {
+		    	function(err, result) {
 		    		done();
 		    		if(err){
 		               console.log(err);
