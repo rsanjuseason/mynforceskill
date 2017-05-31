@@ -34,7 +34,7 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 		
-		pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+		pg.connect(process.env.DATABASE_URL, function (err, client,done,response) {
 		
 			var rowresult = "Some error Occured";
 			//var myresult = "";
@@ -48,40 +48,22 @@ app.intent('saynumber',
 
 		    client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-		    	function(err, result) {
+		    	function(err, result,response) {
 		    		done();
 		    		if(err){
 		               console.log(err);
 		               return err;
 		            }
 		            console.log(result.rows[0].firstname);
+		            console.log(response);
 		            //return result.rows[0].firstname;
-		            response.say(" " + result.rows[0].firstname);
+		             response.say(" " + result.rows[0].firstname);
 		            client.end();
-		    		/*if (!err) {
-		    			if(result.rowCount > 0) {
-		    				//var opp = result.records[0];
-		    				//rowresult = "found Leads with " + result.rows[0].firstname
-		    				console.log("this my leads:"  +  result.rows[0].firstname);
-	    					//return leadname;
-		    				response.say("Found Leads with name " + result.rows[0].firstname);
-		    			} else{
-		    				//rowresult = "No lead found";
-		    				response.say("No lead found.");
-		    			}
-		    			
-		    		}else {
-		    			//rowresult = "Sorry an error occured";
-		    			response.say("Sorry an error occured.");
-		    		}
-		    		client.end();
-		    		response.say("Sorry an error occured.before");*/
 				}
-			);
-			
-			
+			);	
 		});
-		response.say("connected");
+
+		//response.say("connected");
 		
 	    
 	}
