@@ -33,6 +33,8 @@ app.intent('saynumber',
 	function(request,response) {
 	
 		var number = request.slot('number');
+
+		response.say("Nishit");
 		
 		pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 		
