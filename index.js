@@ -35,7 +35,9 @@ app.intent('saynumber',
 		pg.defaults.ssl = true;
 		var number = request.slot('number');
 		
-		record(request,response);	
+		getRecord(function(record){
+			response.say(record);
+		});	
 	    
 	}
 );
@@ -51,6 +53,35 @@ var record = function(request,response) {
 	});
    //return "Sorry an error occured"; 
 } 
+
+function getRecord(cb) {
+    var result = "Sorry an error occured.";
+    client.query(
+    	'SELECT firstname,lastname,email FROM salesforce.Lead',
+    	function(err, result) {
+    		done();
+    		if (!err) {
+    			if(result.rowCount > 0) {
+    				//var opp = result.records[0];
+    				//rowresult = "found Leads with " + result.rows[0].firstname
+    				console.log("this my leads:"  +  result.rows[0].firstname);
+					//return leadname;
+    				result = "Found Leads with name " + result.rows[0].firstname;
+    			} else{
+    				//rowresult = "No lead found";
+    				result = "No lead found.";
+    			}
+    			
+    		}else {
+    			//rowresult = "Sorry an error occured";
+    			result = "Sorry an error occured.";
+    		}
+    		client.end();
+    		cb(result);
+    		
+		}
+	);
+}
 
 //app.express({ expressApp: express_app });
 
