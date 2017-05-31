@@ -34,7 +34,7 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 
-		
+		var mydata;
 		function getData(back){
 
 			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
@@ -67,11 +67,12 @@ app.intent('saynumber',
 
 		getData(function(data) { 
 			console.log(data);
+			mydata = data;
 			response.say(data); 
 
 		});
-
-		//response.say("connected");
+		console.log('--->' + mydata);
+		response.say("connected " + mydata);
 		
 	    
 	}
