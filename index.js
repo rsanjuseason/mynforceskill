@@ -55,7 +55,8 @@ app.intent('saynumber',
 		               return err;
 		            }
 		            console.log(result.rows[0].firstname);
-		            return result.rows[0].firstname;
+		            //return result.rows[0].firstname;
+		            response.say(" " + result.rows[0].firstname);
 		            client.end();
 		    		/*if (!err) {
 		    			if(result.rowCount > 0) {
@@ -80,6 +81,7 @@ app.intent('saynumber',
 			
 			
 		});
+		response.say("connected");
 		
 	    
 	}
