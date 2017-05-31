@@ -65,13 +65,16 @@ app.intent('saynumber',
 		}
 
 
-		getData(function(mydata) { 
+		var tr = getData(function(mydata) { 
 			console.log(mydata);
 			//mydata = data;
-			response.say(mydata); 
+			return mydata;
 
 		});
-		 
+		
+		tr.then(function(data){
+			response.say(data);
+		});
 	}
 );
 
