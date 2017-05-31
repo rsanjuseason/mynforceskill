@@ -77,9 +77,9 @@ function getRecord(cb) {
     			//rowresult = "Sorry an error occured";
     			result = "Sorry an error occured.";
     		}
-    		client.end();
-    		cb(result);
     		
+    		cb(result);
+    		client.end();
 		}
 	);
 }
