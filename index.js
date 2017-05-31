@@ -42,7 +42,7 @@ app.intent('saynumber',
 		    if (err) throw err;
 		    console.log('Connected to postgres! Getting schemas...');
 
-		    return rowresult = client.query(
+		    var rowresult = client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
 		    		client.end();
@@ -64,8 +64,9 @@ app.intent('saynumber',
 				}
 			);
 			
+			console.log("rowresult " + rowresult);
 		});
-
+	    console.log("pgcon " + pgcon);
 		response.say(" " + pgcon);
 
 	}
