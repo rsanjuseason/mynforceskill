@@ -1,9 +1,9 @@
 module.change_code = 1;
 'use strict';
 
-var express = require("express");
+//var express = require("express");
 var alexa = require( 'alexa-app' );
-var express_app = express();
+//var express_app = express();
 var pg = require('pg');
 var app = new alexa.app( 'skill' );
 
@@ -32,12 +32,15 @@ app.intent('saynumber',
   },
   function(request,response) {
     //var number = request.slot('number');
+    //console.log(process.env.DATABASE_URL);
     //response.say("You asked for the number "+number);
     pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
     	console.log(process.env.DATABASE_URL);
     	// watch for any connect issues
-        if (err) console.log(err);
-        conn.query(
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+
+        /*conn.query(
         	'SELECT firstname,lastname,email FROM salesforce.Lead',
         	[],
         	function(err, result) {
@@ -54,11 +57,16 @@ app.intent('saynumber',
         			response.say('Sorry an error occured ');
         		}
     		}
-    	);
+    	);*/
+    	conn.query('SELECT firstname,lastname,email FROM salesforce.Lead')
+	    .on('row', function(row) {
+	      console.log(JSON.stringify(row));
+	      response.say(JSON.stringify(row));
+	    });
     });
   }
 );
 
-app.express({ expressApp: express_app });
+//app.express({ expressApp: express_app });
 
 module.exports = app;
