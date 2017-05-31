@@ -64,7 +64,7 @@ app.intent('saynumber',
 				}
 			);
 			
-			console.log("rowresult " + rowresult);
+			console.log("rowresult " + JSON.stringify(rowresult));
 		});
 	    console.log("pgcon " + pgcon);
 		response.say(" " + pgcon);
