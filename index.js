@@ -6,6 +6,8 @@ var alexa = require( 'alexa-app' );
 //var express_app = express();
 var pg = require('pg');
 var app = new alexa.app( 'skill' );
+var client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
 
 app.launch( function( request, response ) {
 	response.say( 'Welcome to your test skill' ).reprompt( 'Way to go. You got it to run. Bad ass.' ).shouldEndSession( false );
@@ -32,62 +34,20 @@ app.intent('saynumber',
 
 		pg.defaults.ssl = true;
 		var number = request.slot('number');
-		//var leadname = getleads();
 		
-		getleads().then(getleads => console.log(getleads));
-		
-		response.say(leadname);
+		record(request,response);	
 	    
 	}
 );
 
-function getleads() { 
-	pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-			
-		var rowresult = "Some error Occured";
-		//var myresult = "";
-		// watch for any connect issues
-	    if (err) {
-	    	
-	    	console.log("not able to get connection "+ err);
-   			return err;
-    	}
-	    console.log('Connected to postgres! Getting schemas...');
-
-	    client.query(
-	    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-	    	function(err, result) {
-	    		done();
-	    		if(err){
-	               console.log(err);
-	               return err;
-	            }
-	            console.log(result.rows[0].firstname);
-	            return result.rows[0].firstname;
-	            
-
-	    		/*if (!err) {
-	    			if(result.rowCount > 0) {
-	    				//var opp = result.records[0];
-	    				//rowresult = "found Leads with " + result.rows[0].firstname
-	    				console.log("this my leads:"  +  result.rows[0].firstname);
-    					//return leadname;
-	    				response.say("Found Leads with name " + result.rows[0].firstname);
-	    			} else{
-	    				//rowresult = "No lead found";
-	    				response.say("No lead found.");
-	    			}
-	    			
-	    		}else {
-	    			//rowresult = "Sorry an error occured";
-	    			response.say("Sorry an error occured.");
-	    		}
-	    		client.end();
-	    		response.say("Sorry an error occured.before");*/
-			}
-		);
-		
-		
+var record = function(request,response) { 
+	var query = client.query("SELECT firstname,lastname,email FROM salesforce.Lead");
+	query.on("row", function (row, result) {
+		result.addRow(row);
+	});
+	query.on("end", function (result) {
+		console.log(result.rows[0].firstname);
+		response.say(result.rows[0].firstname);
 	});
    //return "Sorry an error occured"; 
 } 
