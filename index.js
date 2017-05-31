@@ -32,8 +32,9 @@ app.intent('saynumber',
 
 		pg.defaults.ssl = true;
 		var number = request.slot('number');
-		var leadname = getleads();
+		//var leadname = getleads();
 		
+		getleads().then(getleads => console.log(getleads));
 		
 		response.say(leadname);
 	    
@@ -56,14 +57,14 @@ function getleads() {
 	    client.query(
 	    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 	    	function(err, result) {
-	    		
+	    		done();
 	    		if(err){
 	               console.log(err);
 	               return err;
 	            }
 	            console.log(result.rows[0].firstname);
 	            return result.rows[0].firstname;
-	            done();
+	            
 
 	    		/*if (!err) {
 	    			if(result.rowCount > 0) {
@@ -88,7 +89,7 @@ function getleads() {
 		
 		
 	});
-   return "Sorry an rrror occured"; 
+   //return "Sorry an error occured"; 
 } 
 
 //app.express({ expressApp: express_app });
