@@ -58,6 +58,10 @@ app.intent('saynumber',
 		            console.log(result.rows[0].firstname);
 		            response.say(result.rows[0].firstname);
 		            done();
+		            client.end(function (err,result) {
+				      if (err) throw err;
+				      console.log(result.rows[0]); 
+				    });
 		    		/*if (!err) {
 		    			if(result.rowCount > 0) {
 		    				//var opp = result.records[0];
