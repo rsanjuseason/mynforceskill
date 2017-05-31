@@ -35,7 +35,7 @@ app.intent('saynumber',
 		var leadname = "";
 		
 		//response.say("You asked for the number "+number);
-		pg.connect(process.env.DATABASE_URL, function (err, client) {
+	    var pgcon =	pg.connect(process.env.DATABASE_URL, function (err, client) {
 			
 			// watch for any connect issues
 		    if (err) throw err;
@@ -48,22 +48,24 @@ app.intent('saynumber',
 		    		if (!err) {
 		    			if(result.rowCount > 0) {
 		    				//var opp = result.records[0];
-		    				leadname = "" + result.rows[0].firstname;
+		    				leadname = "found Leads with " + result.rows[0].firstname
 		    				console.log("this my leads:"  +  result.rows[0].firstname);
-
-		    				response.say("found Leads with " + result.rows[0].firstname);
+	    					return leadname;
+		    				//response.say("found Leads with " + result.rows[0].firstname);
 		    			} else{
-		    				response.say("No lead found");
+		    				return  "No lead found";
 		    			}
 		    			
 		    		}else {
-		    			response.say("Sorry an error occured");
+		    			return "Sorry an error occured";
 		    		}
 		    		
 				}
 			);
 			
 		});
+
+		response.say(" " + pgcon);
 
 	}
 );
