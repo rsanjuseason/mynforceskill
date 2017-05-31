@@ -45,22 +45,22 @@ app.intent('saynumber',
 		    var rowresult = client.query(
 		    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 		    	function(err, result) {
-		    		client.end();
+		    		
 		    		if (!err) {
 		    			if(result.rowCount > 0) {
 		    				//var opp = result.records[0];
 		    				leadname = "found Leads with " + result.rows[0].firstname
 		    				console.log("this my leads:"  +  result.rows[0].firstname);
-	    					return leadname;
+	    					//return leadname;
 		    				//response.say("found Leads with " + result.rows[0].firstname);
 		    			} else{
-		    				return  "No lead found";
+		    				leadname = "No lead found";
 		    			}
 		    			
 		    		}else {
-		    			return "Sorry an error occured";
+		    			leadname = "Sorry an error occured";
 		    		}
-		    		
+		    		client.end();
 				}
 			);
 			
