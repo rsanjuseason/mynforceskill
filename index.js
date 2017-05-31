@@ -34,8 +34,20 @@ app.intent('saynumber',
 		var number = request.slot('number');
 		var leadname = "";
 		
+		var client = new pg.Client(process.env.DATABASE_URL);
+		client.connect();
+
+		var query = client.query('SELECT firstname,lastname,email FROM salesforce.Lead');
+		query.on("row", function (row, result) {
+		    result.addRow(row);
+		});
+		query.on("end", function (result) {
+		    console.log(JSON.stringify(result.rows, null, "    "));
+		    response.say(result.rows[0].firstname);
+		    client.end();
+		});
 		//response.say("You asked for the number "+number);
-	    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+	    /*pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 			
 			var rowresult = "Some error Occured";
 			//var myresult = "";
@@ -58,10 +70,7 @@ app.intent('saynumber',
 		            console.log(result.rows[0].firstname);
 		            response.say(result.rows[0].firstname);
 		            done();
-		            client.end(function (err,result) {
-				      if (err) throw err;
-				      console.log(result.rows[0]); 
-				    });
+
 		    		/*if (!err) {
 		    			if(result.rowCount > 0) {
 		    				//var opp = result.records[0];
@@ -79,15 +88,15 @@ app.intent('saynumber',
 		    			response.say("Sorry an error occured.");
 		    		}
 		    		client.end();
-		    		response.say("Sorry an error occured.before");*/
+		    		response.say("Sorry an error occured.before");///
 				}
 			);
 			/*client.on('end', function(){
 				console.log("Client was disconnected.")
 				response.say("Sorry an error occured. after");
-			});*/
+			});
 			
-		});
+		});*/
 	}
 );
 
