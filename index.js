@@ -9,6 +9,31 @@ var app = new alexa.app( 'skill' );
 var client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 
+var pgconnect = pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+					var rowresult = "Some error Occured";
+				
+				    if (err) {
+				    	
+				    	console.log("not able to get connection "+ err);
+			   			return err;
+			    	}
+				    console.log('Connected to postgres! Getting schemas...');
+
+				    client.query(
+				    	'SELECT firstname,lastname,email FROM salesforce.Lead',
+				    	function(err, result) {
+				    		if(err){
+				               console.log(err);
+				               return err;
+				            }
+				         	
+				           back(result.rows[0].firstname);
+				           done(); 
+				           // client.end();
+						}
+					);	
+				});
+
 app.launch( function( request, response ) {
 	response.say( 'Welcome to your test skill' ).reprompt( 'Way to go. You got it to run. Bad ass.' ).shouldEndSession( false );
 } );
@@ -34,47 +59,13 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 
-		var mydata;
-		function getData(back){
+		console.log(pgconnect);
+		response.say("data");
 
-			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-				var rowresult = "Some error Occured";
-			
-			    if (err) {
-			    	
-			    	console.log("not able to get connection "+ err);
-		   			return err;
-		    	}
-			    console.log('Connected to postgres! Getting schemas...');
-
-			    client.query(
-			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-			    	function(err, result) {
-			    		if(err){
-			               console.log(err);
-			               return err;
-			            }
-			         	
-			           back(result.rows[0].firstname,response);
-			           done(); 
-			           // client.end();
-					}
-				);	
-			});
-
-		}
-
-
-		getData(function(data,response) { 
-			response.say(data);		
-			console.log(data); 
-		});
 		
 	}
 );
 
-
-
-//app.express({ expressApp: express_app });
+app.express({ expressApp: express_app });
 
 module.exports = app;
