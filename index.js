@@ -65,6 +65,7 @@ app.intent('saynumber',
     	);
     	
     });
+    console.log(leadname);
     response.say("You asked for the number "+number + " " + leadname);
   }
 );
