@@ -3,6 +3,7 @@ module.change_code = 1;
 
 //var express = require("express");
 var alexa = require( 'alexa-app' );
+var FAADataHelper = require('./faa_data_helper');
 //var express_app = express();
 var pg = require('pg');
 var app = new alexa.app( 'skill' );
@@ -58,7 +59,7 @@ app.intent('saynumber',
 			            //mydata = result.rows[0].firstname;
 			            response.say(result.rows[0].firstname).send();
 			            console.log('called');
-			            return true;
+			            return false;
 			            //console.log(response);
 			            // client.end();
 			            
