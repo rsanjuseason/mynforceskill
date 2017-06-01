@@ -65,14 +65,14 @@ app.intent('saynumber',
 					}
 				);
 
-			}
+			});
 
-		//}
+		}
 
 
 		getData(response,function(data) { 
 			console.log(data);
-			this.response.say(data).send(); 
+			this.response.say(data).send();
 			return true;
 			console.log('called call');
             console.log(this.response);
