@@ -41,7 +41,7 @@ app.intent('saynumber',
 		var mydata = "text";
 		function getData(){
 		//	var mydata;
-			return co(function *(){
+			return co( function *(){
 			    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 						var rowresult = "Some error Occured";
 					
@@ -92,7 +92,7 @@ app.intent('saynumber',
 
 		}
 
-		var d = yield * getData();
+		var d = getData();
 		console.log('d: ' + d);
 		response.say(" data " + d);
 		/*response.say(" data " + getData(function(data) { 
