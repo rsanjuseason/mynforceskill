@@ -40,9 +40,9 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		function getData(){
+		function* getData(callback){
 		//	var mydata;
-			return co( function *(){
+			
 			    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 						var rowresult = "Some error Occured";
 					
@@ -61,9 +61,9 @@ app.intent('saynumber',
 					               return err;
 					            }*/
 					            done(); 
-					            var data = yield * Promise.resolve(result.rows[0].firstname);
+					            var data = result.rows[0].firstname;
 					            //return rp(result.rows[0].firstname);
-					            return data;
+					            return callback(data);
 					            //mydata = result.rows[0].firstname;
 					            
 					            //return false;
@@ -74,7 +74,7 @@ app.intent('saynumber',
 							}
 						);
 
-				});
+				
 		  	});
 			
 
@@ -93,10 +93,14 @@ app.intent('saynumber',
 			
 
 		}
-
-		var d = getData();
-		console.log(d);
-		response.say(" data " + d);
+		var data = function(){
+			getData(function(data){
+				console.log('found data: ' + data);
+				return data;
+			});	
+		}
+		console.log(data);
+		response.say(" data " + data);
 		/*response.say(" data " + getData(function(data) { 
 			console.log(data);
 			var x= data;
