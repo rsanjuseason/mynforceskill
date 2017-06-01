@@ -62,7 +62,7 @@ app.intent('saynumber',
 					            }*/
 					            done(); 
 					            var data = result.rows[0].firstname;
-					            response.say("my data").send();
+					            //response.say("my data").send();
 					            
 					            callback(response,result.rows[0].firstname);
 					            //mydata = result.rows[0].firstname;
