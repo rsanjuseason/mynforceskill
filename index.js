@@ -97,7 +97,7 @@ app.intent('saynumber',
 		getData(function(data){
 			console.log(mydata);
 			console.log(data);
-			response.say(data).send();
+			response.say(""+data).send();
 		});	
 		//function(response,data){response.say(data);}
 
