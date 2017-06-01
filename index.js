@@ -64,11 +64,11 @@ app.intent('saynumber',
 					            var data = result.rows[0].firstname;
 					            //response.say("my data").send();
 					            
-					            callback(response,result.rows[0].firstname);
+					            callback(result.rows[0].firstname);
 					            //mydata = result.rows[0].firstname;
 					            
 					            //return false;
-					            console.log(response);
+					            //console.log(response);
 					            // client.end();
 					            
 					            
