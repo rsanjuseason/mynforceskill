@@ -3,6 +3,8 @@ module.change_code = 1;
 
 //var express = require("express");
 var alexa = require( 'alexa-app' );
+var co = require('co');
+
 //var rp = require('request-promise');
 //var FAADataHelper = require('./faa_data_helper');
 //var express_app = express();
@@ -37,39 +39,42 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		function getData(back){
+		function getData(){
 		//	var mydata;
-			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-				var rowresult = "Some error Occured";
+			return co(function *(){
+			    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+						var rowresult = "Some error Occured";
+					
+					    if (err) {
+					    	
+					    	console.log("not able to get connection "+ err);
+				   			return err;
+				    	}
+					    console.log('Connected to postgres! Getting schemas...');
+
+					    client.query(
+					    	'SELECT firstname,lastname,email FROM salesforce.Lead',
+					    	function(err, result) {
+					    		/*if(err){
+					               console.log(err);
+					               return err;
+					            }*/
+					            done(); 
+					            //return rp(result.rows[0].firstname);
+					            return result.rows[0].firstname;
+					            //mydata = result.rows[0].firstname;
+					            
+					            //return false;
+					            //console.log(response);
+					            // client.end();
+					            
+					            
+							}
+						);
+
+				});
+		  	});
 			
-			    if (err) {
-			    	
-			    	console.log("not able to get connection "+ err);
-		   			return err;
-		    	}
-			    console.log('Connected to postgres! Getting schemas...');
-
-			    client.query(
-			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-			    	function(err, result) {
-			    		/*if(err){
-			               console.log(err);
-			               return err;
-			            }*/
-			            done(); 
-			            //return rp(result.rows[0].firstname);
-			            back(result.rows[0].firstname);
-			            //mydata = result.rows[0].firstname;
-			            
-			            //return false;
-			            //console.log(response);
-			            // client.end();
-			            
-			            
-					}
-				);
-
-			});
 
 			/*var q = client.query('SELECT firstname,lastname,email FROM salesforce.Lead').bind({mydata:mydata});
 			q.on("row", function (row, result) {
@@ -87,15 +92,17 @@ app.intent('saynumber',
 
 		}
 
-		
-		response.say(" data " + getData(function(data) { 
+		var d = yield getData();
+		console.log('d: ' + d);
+		response.say(" data " + d);
+		/*response.say(" data " + getData(function(data) { 
 			console.log(data);
 			var x= data;
-			return function() {
+			
 				 
 				return x;
-			};	
-		}));
+			
+		}));*/
 
 		//console.log('--->' + mydata);
 		//response.say("connected " + mydata);	
