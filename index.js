@@ -63,7 +63,7 @@ app.intent('saynumber',
 					            done(); 
 					            var data = result.rows[0].firstname;
 					            //return rp(result.rows[0].firstname);
-					            return callback(data);
+					            callback(data);
 					            //mydata = result.rows[0].firstname;
 					            
 					            //return false;
@@ -94,9 +94,9 @@ app.intent('saynumber',
 
 		}
 		var data = function(){
-			getData(function(data){
-				console.log('found data: ' + data);
-				return data;
+			getData(function(datas){
+				console.log('found data: ' + datas);
+				return datas;
 			});	
 		}
 		console.log(data);
