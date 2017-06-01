@@ -3,7 +3,7 @@ module.change_code = 1;
 
 //var express = require("express");
 var alexa = require( 'alexa-app' );
-var rp = require('request-promise');
+//var rp = require('request-promise');
 //var FAADataHelper = require('./faa_data_helper');
 //var express_app = express();
 var pg = require('pg');
