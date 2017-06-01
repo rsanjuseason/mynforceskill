@@ -55,8 +55,8 @@ app.intent('saynumber',
 			               return err;
 			            }*/
 			            done(); 
-			           //back(result.rows[0].firstname);
-			            response.say(err,result);
+			            back(result.rows[0].firstname);
+			            //response.say(err,result);
 			            console.log('called');
 			            console.log(response);
 			           // client.end();
@@ -70,6 +70,8 @@ app.intent('saynumber',
 		getData(function(err,data) { 
 			console.log(data);
 			response.say('data: ' + data.rows[0].firstname); 
+			console.log('called call');
+            console.log(response);
 
 		});
 		//console.log('--->'mydata);
