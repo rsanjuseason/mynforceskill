@@ -35,7 +35,7 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata;
-		function getData(response,back){
+		function getData(back){
 
 			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 				var rowresult = "Some error Occured";
@@ -50,13 +50,13 @@ app.intent('saynumber',
 			    client.query(
 			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
 			    	function(err, result) {
-			    		if(err){
+			    		/*if(err){
 			               console.log(err);
 			               return err;
-			            }
+			            }*/
 			            done(); 
 			           //back(result.rows[0].firstname);
-			            response.say(result.rows[0].firstname);
+			            response.say(err,result);
 			            console.log('called');
 			            console.log(response);
 			           // client.end();
@@ -67,13 +67,13 @@ app.intent('saynumber',
 		}
 
 
-		getData(response,function(data) { 
+		getData(function(err,data) { 
 			console.log(data);
-			response.say('data: ' + data); 
+			response.say('data: ' + data.rows[0].firstname); 
 
 		});
-		console.log('--->'mydata);
-		response.say("connected " + mydata);
+		//console.log('--->'mydata);
+		//response.say("connected " + mydata);
 		
 	    
 	}
