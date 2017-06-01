@@ -37,9 +37,9 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		//function getData(back){
+		function getData(back){
 		//	var mydata;
-			/*pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 				var rowresult = "Some error Occured";
 			
 			    if (err) {
@@ -55,7 +55,7 @@ app.intent('saynumber',
 			    		/*if(err){
 			               console.log(err);
 			               return err;
-			            }//////
+			            }*/
 			            done(); 
 			            //return rp(result.rows[0].firstname);
 			            back(result.rows[0].firstname);
@@ -69,25 +69,33 @@ app.intent('saynumber',
 					}
 				);
 
-			});*/
+			});
 
-			var q = client.query('SELECT firstname,lastname,email FROM salesforce.Lead').bind({mydata:mydata});
+			/*var q = client.query('SELECT firstname,lastname,email FROM salesforce.Lead').bind({mydata:mydata});
 			q.on("row", function (row, result) {
 				result.addRow(row);
 			});
 			q.on("end", function (result) {
 				response.say(result.rows[0].firstname).send();
 				console.log('mydata: '+ mydata);
-			});
+				return function() {
+					var y = [].slice.call(arguments, 0); 
+					return fn.apply(context, x.concat(y));
+				};
+			});*/
 			
 
-		//}
+		}
 
 		
-		/*response.say(" data " + getData(function(data) { 
+		response.say(" data " + getData(function(data) { 
 			console.log(data);
-			return data;	
-		}));*/
+			var x= data;
+			return function() {
+				 
+				return x;
+			};	
+		}));
 
 		//console.log('--->' + mydata);
 		//response.say("connected " + mydata);	
