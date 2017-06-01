@@ -101,7 +101,7 @@ app.intent('saynumber',
 		}
 
 		console.log(data());
-		response.say(" data " + data());
+		response.say(" data ");
 		/*response.say(" data " + getData(function(data) { 
 			console.log(data);
 			var x= data;
