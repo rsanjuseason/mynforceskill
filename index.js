@@ -9,31 +9,6 @@ var app = new alexa.app( 'skill' );
 var client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 
-var pgconnect = pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-					var rowresult = "Some error Occured";
-				
-				    if (err) {
-				    	
-				    	console.log("not able to get connection "+ err);
-			   			return err;
-			    	}
-				    console.log('Connected to postgres! Getting schemas...');
-
-				    client.query(
-				    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-				    	function(err, result) {
-				    		if(err){
-				               console.log(err);
-				               return err;
-				            }
-				         	
-				           //back(result.rows[0].firstname);
-				           done(); 
-				           // client.end();
-						}
-					);	
-				});
-
 app.launch( function( request, response ) {
 	response.say( 'Welcome to your test skill' ).reprompt( 'Way to go. You got it to run. Bad ass.' ).shouldEndSession( false );
 } );
@@ -59,13 +34,53 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 
-		console.log(pgconnect);
-		response.say("data");
+		var mydata;
+		function getData(response,back){
 
+			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+				var rowresult = "Some error Occured";
+			
+			    if (err) {
+			    	
+			    	console.log("not able to get connection "+ err);
+		   			return err;
+		    	}
+			    console.log('Connected to postgres! Getting schemas...');
+
+			    client.query(
+			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
+			    	function(err, result) {
+			    		if(err){
+			               console.log(err);
+			               return err;
+			            }
+			            done(); 
+			           //back(result.rows[0].firstname);
+			            response.say(result.rows[0].firstname);
+			            console.log('called');
+			            console.log(response);
+			           // client.end();
+					}
+				);	
+			});
+
+		}
+
+
+		getData(response,function(data) { 
+			console.log(data);
+			response.say('data: ' + data); 
+
+		});
+		console.log('--->'mydata);
+		response.say("connected " + mydata);
 		
+	    
 	}
 );
 
-app.express({ expressApp: express_app });
+
+
+//app.express({ expressApp: express_app });
 
 module.exports = app;
