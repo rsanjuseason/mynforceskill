@@ -63,7 +63,7 @@ app.intent('saynumber',
 			            done(); 
 					}
 				);	
-			}.bind({response:response}));
+			}.bind({mydata:mydata}));
 
 		//}
 
@@ -75,8 +75,8 @@ app.intent('saynumber',
             console.log(response);
 
 		});*/
-		//console.log('--->'mydata);
-		//response.say("connected " + mydata);
+		console.log('--->'mydata);
+		response.say("connected " + mydata);
 		
 	    
 	}
