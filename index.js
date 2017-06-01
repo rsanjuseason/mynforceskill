@@ -55,9 +55,9 @@ app.intent('saynumber',
 			               return err;
 			            }*/
 			            done(); 
-			            back(result.rows[0].firstname);
+			            //back(result.rows[0].firstname);
 			            //mydata = result.rows[0].firstname;
-			            response.say(result.rows[0].firstname).send();
+			            response.say(result.rows[0].firstname).shouldEndSession( false ).send();
 			            console.log('called');
 			            return false;
 			            //console.log(response);
