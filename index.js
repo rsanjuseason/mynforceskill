@@ -40,7 +40,7 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		function* getData(callback){
+		function getData(callback){
 		//	var mydata;
 			
 			    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
