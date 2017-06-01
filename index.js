@@ -9,7 +9,7 @@ var rp = require('request-promise');
 var pg = require('pg');
 var app = new alexa.app( 'skill' );
 var client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
+//client.connect();
 
 app.launch( function( request, response ) {
 	response.say( 'Welcome to your test skill' ).reprompt( 'Way to go. You got it to run. Bad ass.' ).shouldEndSession( false );
@@ -36,9 +36,9 @@ app.intent('saynumber',
 	
 		var number = request.slot('number');
 
-		function getData(back){
+		function getData(){
 			var mydata;
-			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
+			/*pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 				var rowresult = "Some error Occured";
 			
 			    if (err) {
@@ -54,7 +54,7 @@ app.intent('saynumber',
 			    		/*if(err){
 			               console.log(err);
 			               return err;
-			            }*/
+			            }////
 			            done(); 
 			            return rp(result.rows[0].firstname);
 			            //back(result.rows[0].firstname);
@@ -68,22 +68,31 @@ app.intent('saynumber',
 					}
 				);
 
-			});
+			});*/
+			client.connect()
+					    .then(obj => {
+					        obj.done();
+					        return obj.rows[0].firstname; // success, release the connection;
+					    })
+					    .catch(error => {
+					        console.log("ERROR:", error.message || error);
+					        return error;
+					    });
 
 		}
 
-
-		getData(response,function(data) { 
+		response.say(getData());
+		/*getData(response,function(data) { 
 			console.log(data);
 			this.response.say(data).send();
 			//return data;
 			//console.log('called call');
             //console.log(this.response);
 
-		}.bind({response:response}));
+		}.bind({response:response}));*/
 
 		//console.log('--->' + mydata);
-		//response.say("connected " + mydata);
+		//response.say("connected " + mydata);	
 		
 	    
 	}
