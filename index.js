@@ -62,13 +62,13 @@ app.intent('saynumber',
 					            }*/
 					            done(); 
 					            var data = result.rows[0].firstname;
-					            response.say("my data");
+					            response.say("my data").send();
 					            
 					            //callback(response,result.rows[0].firstname);
 					            //mydata = result.rows[0].firstname;
 					            
 					            //return false;
-					            //console.log(response);
+					            console.log(response);
 					            // client.end();
 					            
 					            
@@ -94,7 +94,8 @@ app.intent('saynumber',
 			
 
 		}
-		getData(response);	
+		getData(response);
+		console.log("running");	
 		//function(response,data){response.say(data);}
 
 		//console.log(data);
