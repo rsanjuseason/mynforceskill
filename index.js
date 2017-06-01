@@ -4,7 +4,7 @@ module.change_code = 1;
 //var express = require("express");
 var alexa = require( 'alexa-app' );
 var co = require('co');
-
+var Sync = require('sync')
 
 //var rp = require('request-promise');
 //var FAADataHelper = require('./faa_data_helper');
@@ -63,8 +63,8 @@ app.intent('saynumber',
 					            done(); 
 					            var data = result.rows[0].firstname;
 
-					            return data;
-					            //callback(data);
+					            
+					            callback(err,result.rows[0].firstname);
 					            //mydata = result.rows[0].firstname;
 					            
 					            //return false;
@@ -94,7 +94,7 @@ app.intent('saynumber',
 			
 
 		}
-		var data = getData();	
+		var data = getData.Sync();	
 		
 
 		console.log(data);
