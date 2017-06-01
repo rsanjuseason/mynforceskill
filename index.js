@@ -61,7 +61,7 @@ app.intent('saynumber',
 					               return err;
 					            }*/
 					            done(); 
-					            var data = yield * result.rows[0].firstname;
+					            var data = yield * Promise.resolve(result.rows[0].firstname);
 					            //return rp(result.rows[0].firstname);
 					            return data;
 					            //mydata = result.rows[0].firstname;
