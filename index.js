@@ -99,8 +99,9 @@ app.intent('saynumber',
 				return datas;
 			});	
 		}
-		console.log(data);
-		response.say(" data " + data);
+
+		console.log(data());
+		response.say(" data " + data());
 		/*response.say(" data " + getData(function(data) { 
 			console.log(data);
 			var x= data;
