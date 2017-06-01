@@ -92,7 +92,7 @@ app.intent('saynumber',
 
 		}
 
-		var d = yield getData();
+		var d = yield * getData();
 		console.log('d: ' + d);
 		response.say(" data " + d);
 		/*response.say(" data " + getData(function(data) { 
