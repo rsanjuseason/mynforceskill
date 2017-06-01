@@ -93,14 +93,13 @@ app.intent('saynumber',
 			
 
 		}
-		var data = function(){
-			getData(function(datas){
+		var data = getData(function(datas){
 				console.log('found data: ' + datas);
 				return datas;
 			});	
-		}
+		
 
-		console.log(data());
+		console.log(data);
 		response.say(" data ");
 		/*response.say(" data " + getData(function(data) { 
 			console.log(data);
