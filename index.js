@@ -122,6 +122,6 @@ app.intent('saynumber',
 
 
 //app.express({ expressApp: express_app });
-console.log(app);
+//console.log(app);
 
 module.exports = app;
