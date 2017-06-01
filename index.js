@@ -40,7 +40,7 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		function getData(response){
+		function getData(callback){
 		//	var mydata;
 				
 			    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
@@ -64,7 +64,7 @@ app.intent('saynumber',
 					            var data = result.rows[0].firstname;
 					            response.say("my data").send();
 					            
-					            //callback(response,result.rows[0].firstname);
+					            callback(response,result.rows[0].firstname);
 					            //mydata = result.rows[0].firstname;
 					            
 					            //return false;
@@ -94,8 +94,11 @@ app.intent('saynumber',
 			
 
 		}
-		getData(response);
-		console.log("running");	
+		getData(function(data){
+			console.log(mydata);
+			console.log(data);
+			response.say(data).send();
+		});	
 		//function(response,data){response.say(data);}
 
 		//console.log(data);
