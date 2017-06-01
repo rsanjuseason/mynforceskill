@@ -40,9 +40,9 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		function getData(callback){
+		function getData(response){
 		//	var mydata;
-			
+				
 			    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 						var rowresult = "Some error Occured";
 					
@@ -94,7 +94,7 @@ app.intent('saynumber',
 			
 
 		}
-		getData();	
+		getData(response);	
 		//function(response,data){response.say(data);}
 
 		//console.log(data);
