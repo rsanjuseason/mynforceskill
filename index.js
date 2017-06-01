@@ -35,7 +35,7 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata;
-		function getData(back){
+		//function getData(back){
 
 			pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 				var rowresult = "Some error Occured";
@@ -55,26 +55,26 @@ app.intent('saynumber',
 			               return err;
 			            }*/
 			            
-			            back(result.rows[0].firstname);
-			            //response.say(err,result);
+			            //back(result.rows[0].firstname);
+			            response.say(result.rows[0].firstname);
 			            console.log('called');
 			            console.log(response);
 			            // client.end();
 			            done(); 
 					}
 				);	
-			});
+			}.bind({response:response}));
 
-		}
+		//}
 
 
-		getData(function(err,data) { 
+		/*getData(function(err,data) { 
 			console.log(data);
 			response.say('data: ' + data.rows[0].firstname); 
 			console.log('called call');
             console.log(response);
 
-		});
+		});*/
 		//console.log('--->'mydata);
 		//response.say("connected " + mydata);
 		
