@@ -54,12 +54,13 @@ app.intent('saynumber',
 			               console.log(err);
 			               return err;
 			            }*/
-			            done(); 
+			            
 			            back(result.rows[0].firstname);
 			            //response.say(err,result);
 			            console.log('called');
 			            console.log(response);
-			           // client.end();
+			            // client.end();
+			            done(); 
 					}
 				);	
 			});
