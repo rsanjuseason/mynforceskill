@@ -71,7 +71,7 @@ app.intent('saynumber',
 
 		getData(response,function(data) { 
 			console.log(data);
-			this.response.say('data: ' + data.rows[0].firstname); 
+			this.response.say(data); 
 			console.log('called call');
             console.log(this.response);
 
