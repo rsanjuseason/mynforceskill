@@ -3,17 +3,24 @@ module.change_code = 1;
 
 //var express = require("express");
 var alexa = require( 'alexa-app' );
-var co = require('co');
-var Sync = require('sync')
-var async = require('async');
-var await = require('asyncawait/await');
+var Promise = require("bluebird");
+
+
 
 //var rp = require('request-promise');
 //var FAADataHelper = require('./faa_data_helper');
 //var express_app = express();
 var pg = require('pg');
 var app = new alexa.app( 'skill' );
-var client = new pg.Client(process.env.DATABASE_URL);
+//var client = new pg.Client(process.env.DATABASE_URL);
+Object.keys(pg).forEach(function(key) {
+    var Class = pg[key];
+    if (typeof Class === "function") {
+        Promise.promisifyAll(Class.prototype);
+        Promise.promisifyAll(Class);
+    }
+})
+Promise.promisifyAll(pg);
 //client.connect();
 
 app.launch( function( request, response ) {
@@ -50,12 +57,12 @@ app.intent('saynumber',
 
 		var mydata = "text";
 		function getData(){
-			var close;
-			return pg.connectAsync(process.env.DATABASE_URL).spread(function (client,done) {
+			
+			/*return pg.connectAsync(process.env.DATABASE_URL).spread(function (client,done) {
 			    /*if (err) {
 			    	console.log("not able to get connection "+ err);
 		    	}
-			    console.log('Connected to postgres! Getting schemas...');*/
+			    console.log('Connected to postgres! Getting schemas...');*
 			    close = done;
 			    return client.query(
 			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
@@ -72,7 +79,21 @@ app.intent('saynumber',
 
 			}).disposer(function() {
 		        if (close) close();
-		    });
+		    });*/
+
+		    pg.connectAsync(process.env.DATABASE_URL).spread(function(connection, release) {
+		    	
+			        connection.queryAsync("SELECT firstname,lastname,email FROM salesforce.Lead")
+			         .then(function(result) {
+			            console.log("rows", result.rows);
+			            return result.rows[0].firstname;
+			         })
+			         .finally(function() {
+			            // Creating a superfluous anonymous function cos I am
+			            // unsure of your JS skill level
+			            release();
+			         });
+			});
 
 		}
 
