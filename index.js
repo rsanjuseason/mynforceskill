@@ -65,7 +65,7 @@ app.intent('saynumber',
 					}
 				);
 
-				
+				return "done";
 		  	});
 
 		}
@@ -73,7 +73,7 @@ app.intent('saynumber',
 			console.log('callback return data is: ' + data);
 			return data;
 		});
-		
+		console.log("return data is: " + s);
 		response.say(s);
 		
 		
