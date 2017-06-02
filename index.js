@@ -97,10 +97,11 @@ app.intent('saynumber',
 
 		}
 		
-		var s = return setTimeout( function(){
-			return getData();
-	 	}, 3000);
-		console.log(s);
+		var s = function(){
+			setTimeout( function(){
+				return getData();
+	 		}, 3000)};
+		console.log(s());
 		response.say("data " + s);
 		
 		
