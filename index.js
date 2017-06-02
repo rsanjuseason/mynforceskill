@@ -49,45 +49,34 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		async.series([
-		    function(callback){
-		        pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-				
-				    if (err) {
-				    	
-				    	console.log("not able to get connection "+ err);
-			   			callback(result.rows[0].firstname);//return err;
-			    	}
-				    console.log('Connected to postgres! Getting schemas...');
+		function getData(){
+			var close;
+			return pg.connectAsync(process.env.DATABASE_URL).spread(function (client,done) {
+			    /*if (err) {
+			    	console.log("not able to get connection "+ err);
+		    	}
+			    console.log('Connected to postgres! Getting schemas...');*/
+			    close = done;
+			    return client.query(
+			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
+			    	function(err, result) {
+			    		if(err){
+			               console.log(err);
+			            }
+			            
+			            //back(result.rows[0].firstname);
+			            //done(); 
+			            return result.rows[0].firstname;
+					}
+				);
 
-				    client.query(
-				    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-				    	function(err, result) {
-				    		if(err){
-				               console.log(err);
-				               return err;
-				            }
-				            done(); 
-				            var data = result.rows[0].firstname;
-				            
-				            callback(null,result.rows[0].firstname);
-				            
-						}
-					);
+			}).disposer(function() {
+		        if (close) close();
+		    });
 
-			  	});
+		}
 
-		    }
-		    
-		],
-		// optional callback
-		function(err, results){
-		    // results is now equal to ['one', 'two']
-		    console.log(results[0]);
-		    response.say(results[0]);
-		    //response.say("ss");
-		});
-
+		response.say("data " + getData());
 		
 		
 		
