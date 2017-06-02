@@ -85,7 +85,7 @@ app.intent('saynumber',
 		    	
 			        connection.queryAsync("SELECT firstname,lastname,email FROM salesforce.Lead")
 			         .then(function(result) {
-			            console.log("rows", result.rows);
+			            //console.log("rows", result.rows);
 			            return result.rows[0].firstname;
 			         })
 			         .finally(function() {
@@ -100,7 +100,7 @@ app.intent('saynumber',
 		var s = setTimeout( function(){
 			return getData();
 	 	}, 3000);
-		console.log(JSON.stringify(s));
+		console.log(s);
 		response.say("data " + s);
 		
 		
