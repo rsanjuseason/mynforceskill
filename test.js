@@ -1,27 +1,39 @@
 var co = require('co');
 var yield = require('yield');
+var wait = require('wait.for');
+var async = require('async');
+var await = require('asyncawait/await');
+
 
 var myv = "test1";
-/*var fn = co.wrap(function* (val) {
-  var s = yield [1];
-  return s;
-});
- 
-var s = fn(true).then(function (val) {
-	console.log(val);
- 	return val;
-});
-*/
 
-function test(callback){
-	var s= "testinmg callback";
-	return callback(s,myv);
+function testing(res,call){
+	return call(res);
 }
-//var s = ;
-//s1 = s();
-console.log(test(function(v1,v2){
-	//console.log(v1+ " " + v2);
-	 //v2="chnage";
-	 return v1}));
-//console.log(myv);
+
+
+var s = async.series([
+    function(callback){
+        // do some stuff ...
+        var s = "testmycode";
+        //callback(null, 'one');
+        setTimeout( function(){
+
+			return callback(null,myv);
+	 	}, 5000);
+
+    }
+    
+],
+// optional callback
+function(err, results){
+    // results is now equal to ['one', 'two']
+    console.log(results[0]);
+
+    return results;
+});
+
+//var sss = 
+//console.log(s());
 console.log("mytest");
+//
