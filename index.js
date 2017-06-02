@@ -69,7 +69,12 @@ app.intent('saynumber',
 		  	});
 
 		}
-		response.say( getData(function(data){ console.log('callback return data is: ' + data);return data;}));
+		var s = getData(function(data){
+			console.log('callback return data is: ' + data);
+			return data;
+		});
+		
+		response.say(s);
 		
 		
 	    
