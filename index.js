@@ -97,7 +97,7 @@ app.intent('saynumber',
 
 		}
 		
-		var s = setTimeout( function(){
+		var s = return setTimeout( function(){
 			return getData();
 	 	}, 3000);
 		console.log(s);
