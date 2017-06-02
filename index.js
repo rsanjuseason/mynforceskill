@@ -41,87 +41,41 @@ app.intent('saynumber',
 
 		var mydata = "text";
 		function getData(callback){
-		//	var mydata;
+		    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
 				
-			    pg.connect(process.env.DATABASE_URL, function (err, client,done) {
-						var rowresult = "Some error Occured";
-					
-					    if (err) {
-					    	
-					    	console.log("not able to get connection "+ err);
-				   			return err;
-				    	}
-					    console.log('Connected to postgres! Getting schemas...');
+			    if (err) {
+			    	
+			    	console.log("not able to get connection "+ err);
+		   			return err;
+		    	}
+			    console.log('Connected to postgres! Getting schemas...');
 
-					    client.query(
-					    	'SELECT firstname,lastname,email FROM salesforce.Lead',
-					    	function(err, result) {
-					    		/*if(err){
-					               console.log(err);
-					               return err;
-					            }*/
-					            done(); 
-					            var data = result.rows[0].firstname;
-					            //response.say("my data").send();
-					            
-					            callback(result.rows[0].firstname);
-					            //mydata = result.rows[0].firstname;
-					            
-					            //return false;
-					            //console.log(response);
-					            // client.end();
-					            
-					            
-							}
-						);
+			    client.query(
+			    	'SELECT firstname,lastname,email FROM salesforce.Lead',
+			    	function(err, result) {
+			    		if(err){
+			               console.log(err);
+			               return err;
+			            }
+			            done(); 
+			            var data = result.rows[0].firstname;
+			            
+			            return callback(result.rows[0].firstname);
+			            
+					}
+				);
 
 				
 		  	});
-			
-
-			/*var q = client.query('SELECT firstname,lastname,email FROM salesforce.Lead').bind({mydata:mydata});
-			q.on("row", function (row, result) {
-				result.addRow(row);
-			});
-			q.on("end", function (result) {
-				response.say(result.rows[0].firstname).send();
-				console.log('mydata: '+ mydata);
-				return function() {
-					var y = [].slice.call(arguments, 0); 
-					return fn.apply(context, x.concat(y));
-				};
-			});*/
-			
 
 		}
-		getData(function(data){
-			console.log(mydata);
-			console.log(data);
-			response.say(""+data).send();
-		});	
-		//function(response,data){response.say(data);}
-
-		//console.log(data);
-		//response.say(" data ");
-		/*response.say(" data " + getData(function(data) { 
-			console.log(data);
-			var x= data;
-			
-				 
-				return x;
-			
-		}));*/
-
-		//console.log('--->' + mydata);
-		//response.say("connected " + mydata);	
+		response.say( getData(function(data){ console.log('callback return data is: ' + data);return data;}));
+		
 		
 	    
 	}
 );
 
-
-
 //app.express({ expressApp: express_app });
-//console.log(app);
 
 module.exports = app;

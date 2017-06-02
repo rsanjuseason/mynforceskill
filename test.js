@@ -14,12 +14,14 @@ var s = fn(true).then(function (val) {
 */
 
 function test(callback){
-	var s= "test";
-	callback(s,myv);
+	var s= "testinmg callback";
+	return callback(s,myv);
 }
-var s = test(function(v1,v2){console.log(v1+ " " + v2);
-	 v2="chnage";});
+//var s = ;
 //s1 = s();
-console.log(s);
-console.log(myv);
+console.log(test(function(v1,v2){
+	//console.log(v1+ " " + v2);
+	 //v2="chnage";
+	 return v1}));
+//console.log(myv);
 console.log("mytest");
