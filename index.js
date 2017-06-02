@@ -98,9 +98,9 @@ app.intent('saynumber',
 		}
 		
 		var s = setTimeout( function(){
-			return getdata();
+			return getData();
 	 	}, 3000);
-		console.log(s);
+		console.log(JSON.stringify(s));
 		response.say("data " + s);
 		
 		
