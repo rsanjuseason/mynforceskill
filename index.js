@@ -56,7 +56,7 @@ app.intent('saynumber',
 				    if (err) {
 				    	
 				    	console.log("not able to get connection "+ err);
-			   			return err;
+			   			callback(result.rows[0].firstname);//return err;
 			    	}
 				    console.log('Connected to postgres! Getting schemas...');
 
@@ -70,7 +70,7 @@ app.intent('saynumber',
 				            done(); 
 				            var data = result.rows[0].firstname;
 				            
-				            callback(result.rows[0].firstname);
+				            callback(null,result.rows[0].firstname);
 				            
 						}
 					);
@@ -85,6 +85,7 @@ app.intent('saynumber',
 		    // results is now equal to ['one', 'two']
 		    console.log(results[0]);
 		    response.say(results[0]);
+		    //response.say("ss");
 		});
 
 		
