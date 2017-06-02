@@ -96,8 +96,12 @@ app.intent('saynumber',
 			});
 
 		}
-
-		response.say("data " + getData());
+		
+		var s = setTimeout( function(){
+			return getdata();
+	 	}, 3000);
+		console.log(s);
+		response.say("data " + s);
 		
 		
 		
