@@ -4,23 +4,13 @@ module.change_code = 1;
 //var express = require("express");
 var alexa = require( 'alexa-app' );
 var Promise = require("bluebird");
+var pgsync = require('pg-sync');
+var client = new pgsync.client();
 
-
-
-//var rp = require('request-promise');
-//var FAADataHelper = require('./faa_data_helper');
-//var express_app = express();
-var pg = require('pg');
+//var pg = require('pg');
 var app = new alexa.app( 'skill' );
 //var client = new pg.Client(process.env.DATABASE_URL);
-Object.keys(pg).forEach(function(key) {
-    var Class = pg[key];
-    if (typeof Class === "function") {
-        Promise.promisifyAll(Class.prototype);
-        Promise.promisifyAll(Class);
-    }
-})
-Promise.promisifyAll(pg);
+
 //client.connect();
 
 app.launch( function( request, response ) {
@@ -56,7 +46,7 @@ app.intent('saynumber',
 		var number = request.slot('number');
 
 		var mydata = "text";
-		function getData(){
+		//function getData(){
 			
 			/*return pg.connectAsync(process.env.DATABASE_URL).spread(function (client,done) {
 			    /*if (err) {
@@ -81,7 +71,7 @@ app.intent('saynumber',
 		        if (close) close();
 		    });*/
 
-		    pg.connectAsync(process.env.DATABASE_URL).spread(function(connection, release) {
+		    /*pg.connectAsync(process.env.DATABASE_URL).spread(function(connection, release) {
 		    	
 			        connection.queryAsync("SELECT firstname,lastname,email FROM salesforce.Lead")
 			         .then(function(result) {
@@ -103,10 +93,18 @@ app.intent('saynumber',
 	 		}, 3000)};
 		console.log(s());
 		response.say("data " + s);
+		*/
 		
-		
-		
-	    
+		client.connect(process.env.DATABASE_URL);
+		client.begin();
+		client.setIsolationLevelSerializable();
+		var result = client.query("SELECT firstname,lastname,email FROM salesforce.Lead");
+		console.log(result);
+		console.log(JSON.stringify(result));
+		console.log("got it");
+		client.disconnect();
+		console.log("closed connection");
+			    
 	}
 );
 
